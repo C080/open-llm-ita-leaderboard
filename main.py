@@ -1,26 +1,37 @@
-
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
-
-path = "E:/text-generation-webui-main/models/saiga-7b"
+import os
 
 
+from model import llm_generate, generate_father_prompt, load_model, prep_list_of_prompts
+from read_esco import read_dataset
 
-model_params = {
-    'low_cpu_mem_usage': True,
-    'torch_dtype': torch.bfloat16,
-    'use_flash_attention_2': False,
-}
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model = AutoModelForCausalLM.from_pretrained(path, **model_params).to(device)
-tokenizer = AutoTokenizer.from_pretrained(path)
 
-prompt = "My favourite condiment is"
+def main():
+    print("Starting...")
+    path = os.path.dirname(os.path.abspath(__file__))
+    # import dataset dataset
+    occupations = read_dataset(path)
+    # load model
+    model, tokenizer = load_model()
+    # prepare the first prompt
+    occupations_dict = {}
+    for _, row in occupations.iterrows():
+        father_prompt = generate_father_prompt(row)
+        job_descriptions_prompt = llm_generate(model, tokenizer, father_prompt, 'cuda') #generate the first prompt
+        job_descriptions_prompt_list =      (job_descriptions_prompt)
+        prompt_oja_dict = {}
+        for i, job_description_prompt in enumerate(job_descriptions_prompt_list):
+            print(f"Generating Prompt {i+1}")
+            completion = llm_generate(model, tokenizer, job_description_prompt, 'cuda') #generate the job description
+            prompt_oja_dict[job_description_prompt] = completion
+            print(f"Prompt {i+1} completed")
+            print(prompt_oja_dict)
+            break
+        occupations_dict[row['preferredLabel']] = prompt_oja_dict
+        break
+    #print(occupations_dict)
 
-model_inputs = tokenizer([prompt], return_tensors="pt").to(device)
-model.to(device)
 
-generated_ids = model.generate(**model_inputs, max_new_tokens=100, do_sample=True)
-tokenizer.batch_decode(generated_ids)[0]
 
+if __name__ == "__main__":
+    main()
