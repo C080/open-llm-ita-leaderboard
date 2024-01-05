@@ -3,6 +3,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
 path = "E:/text-generation-webui-main/models/saiga-7b"
+
+
+
 model_params = {
     'low_cpu_mem_usage': True,
     'torch_dtype': torch.bfloat16,
@@ -10,8 +13,7 @@ model_params = {
 }
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model = AutoModelForCausalLM.from_pretrained(path, **model_params)
-model = model.cuda()
+model = AutoModelForCausalLM.from_pretrained(path, **model_params).to(device)
 tokenizer = AutoTokenizer.from_pretrained(path)
 
 prompt = "My favourite condiment is"
