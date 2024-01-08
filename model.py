@@ -3,6 +3,22 @@ import torch
 
 path = "E:/text-generation-webui-main/models/saiga-7b"
 
+class Agent:
+    def __init__(self, model, tokenizer, device):
+        self.model = model
+        self.tokenizer = tokenizer
+        self.device = device
+        self.memory = []
+
+    def answer(self, prompt):
+        completion = llm_generate(self.model, self.tokenizer, prompt, self.device)
+        self.memory.append(completion)
+        return completion
+    
+    def remember(self):
+        return self.memory[:-1]
+    
+
 
 def load_model():
     model_params = {
@@ -19,8 +35,13 @@ def load_model():
     return model, tokenizer
 
 def llm_generate(model, tokenizer, prompt, device):
-    model_inputs = tokenizer([prompt], return_tensors="pt").to(device)
-    generated_ids = model.generate(**model_inputs, max_new_tokens=1000, do_sample=True)
+    chat = [
+    {"role": "user", "content": f"{prompt}"},
+    ]
+    model_inputs = tokenizer.apply_chat_template(chat, tokenize=True, add_generation_prompt=True, return_tensors="pt")
+    #model_inputs = tokenizer([prompt], return_tensors="pt").to(device)
+    model_inputs = model_inputs.to(device)
+    generated_ids = model.generate(model_inputs, max_new_tokens=500)
     return tokenizer.batch_decode(generated_ids)[0]
 
 def prep_list_of_prompts(job_descriptions_prompt):
