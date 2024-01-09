@@ -1,5 +1,7 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 path = "E:/text-generation-webui-main/models/saiga-7b"
 
@@ -15,8 +17,20 @@ class Agent:
         self.memory.append(completion)
         return completion
     
-    def remember(self):
-        return self.memory[:-1]
+    def remember(self, prompt):
+        
+        # Transform memory and prompt into TF-IDF features
+        vectorizer = TfidfVectorizer().fit(self.memory + [prompt])
+        tfidf = vectorizer.transform(self.memory + [prompt])
+
+        # Compute cosine similarity between prompt and all memories
+        similarities = cosine_similarity(tfidf[-1], tfidf[:-1])
+
+        # Find the index of the most similar memory
+        most_similar_index = similarities.argmax()
+
+        # Return the most similar memory
+        return self.memory[most_similar_index]
     
 
 
@@ -41,24 +55,8 @@ def llm_generate(model, tokenizer, prompt, device):
     model_inputs = tokenizer.apply_chat_template(chat, tokenize=True, add_generation_prompt=True, return_tensors="pt")
     #model_inputs = tokenizer([prompt], return_tensors="pt").to(device)
     model_inputs = model_inputs.to(device)
-    generated_ids = model.generate(model_inputs, max_new_tokens=500)
-    return tokenizer.batch_decode(generated_ids)[0]
-
-def prep_list_of_prompts(job_descriptions_prompt):
-    print("Preparing list of prompts...")
-    job_descriptions_prompt_list = job_descriptions_prompt.split("!STOP!")
-    job_descriptions_prompt_list = [job_description.strip() for job_description in job_descriptions_prompt_list]
-    print(f"Generated {len(job_descriptions_prompt_list)} prompt of job descriptions")
-    return job_descriptions_prompt_list
+    generated_ids = model.generate(model_inputs, max_new_tokens=500, do_sample = True, temperature = 1.5, pad_token_id=tokenizer.eos_token_id)
+    answer = tokenizer.batch_decode(generated_ids)[0].split('[/INST]')[1] # un po una porcata
+    return answer
 
 
-def generate_father_prompt(row):
-    print("-"*50)
-    print(f"Generating job description prompt for the role of {row['preferredLabel']}...")
-    meta_prompt = "Generate 3 different prompts for the creation of multiple job descriptions based on the following informations:\n"
-    meta_prompt += f"Occupation: {row['preferredLabel']}\n"
-    meta_prompt += f"Description: {row['description']}\n"
-    meta_prompt += f"Alt labels: {row['altLabels']}\n"
-    meta_prompt += "All the job descriptions must be different from each other. Separate each job description with the following word: !STOP!"
-    print("-"*50)
-    return meta_prompt
