@@ -20,8 +20,11 @@ class Agent:
     def memorize(self, message):
         self.memory = message
     
-    def remeber(self):
+    def remember(self):
         return self.memory
+    
+    def forget(self):
+        self.memory = []
     
     def find_similarity_in_memory(self, similarity_threshold = 0.8):
         
@@ -69,7 +72,7 @@ def llm_generate(model, tokenizer, prompt, device):
     answer = tokenizer.batch_decode(generated_ids)[0].split('[/INST]')[1] # un po una porcata
     return answer
 
-def llm_batch_generate(model, tokenizer, prompt, device, num_sequences=3):
+def llm_batch_generate(model, tokenizer, prompt, device, num_sequences):
     chat = [
         {"role": "user", "content": f"{prompt}"},
     ]
@@ -89,6 +92,10 @@ def llm_batch_generate(model, tokenizer, prompt, device, num_sequences=3):
     # Split answers if the tokenizer includes special tokens that you wish to remove
     # Note: The line below assumes your special token is '[/INST]', adjust if different
     answers = [answer.split('[/INST]')[1] if '[/INST]' in answer else answer for answer in answers]
+
+    # If only one sequence was generated, return a string instead of a list
+    if len(answers) == 1:
+        answers =  answers[0]
     
     return answers
 
