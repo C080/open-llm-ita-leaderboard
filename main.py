@@ -1,9 +1,37 @@
+from jobspy import scrape_jobs
 import os
 from model import load_model, Agent
 from read_esco import read_dataset
-from utils import print_colored
+from utils import print_colored#, job_ad_web_search
 from datasets import Dataset, load_dataset, concatenate_datasets
 import pandas as pd
+
+
+def job_ad_web_search(title, websites):
+    i = 0
+    while i < 40:
+        for site in websites:
+            try:
+                jobs = scrape_jobs(
+                    site_name=[site],
+                    search_term=title,
+                    results_wanted=10,
+                    country_indeed='USA'  # only needed for indeed / glassdoor
+                )
+            except Exception as e:
+                print(e)
+                i += 10  # if 403, skip to the next site
+                continue
+
+            if not jobs.empty: # if site returns jobs
+                for job in jobs.itertuples():
+                    if job.description is not None:
+                        return job.description[:100]
+                    i += 1
+                    continue
+            i += 10
+
+    return "No jobs found"
 
 def main():
 
@@ -13,6 +41,7 @@ def main():
     similarity_threshold = 0.8
     data_path = os.path.dirname(os.path.abspath(__file__)) # TODO da standardizzare
     model_path = "E:/text-generation-webui-main/models/saiga-7b"
+    websites = ["indeed", "linkedin", "zip_recruiter", "glassdoor"]
 
     # load dataset from huggingface
     existing_dataset = load_dataset('FinancialSupport/SynthEscoJobAds')
@@ -39,12 +68,20 @@ def main():
 
         print_colored(f"[Boss]: incoming task #{i+1} for the team", "red")
 
+        # Look up for job ads
+        print_colored(f"[Searcher]: looking for job ads about {row['preferredLabel']} as reference", "blue")
+        real_job_ads = job_ad_web_search(row['preferredLabel'], websites)
+
         # Construct task string
         generate_task = f"Generate a realistic job description for the role of {row['preferredLabel']},\
                 \nwe are talking about a {row['description']}. It is also known as:\n{row['altLabels']}."
+        
+        # Add real job ads as reference
+        if real_job_ads != "No jobs found":
+            generate_task = f"{generate_task}\n\nHere is a real job ad as reference:\n{real_job_ads}"
 
         print_colored(f"[Writer]: receiving task #{i+1}:", "blue")
-        print_colored(generate_task, "blue")
+        #print_colored(generate_task, "blue")
 
         # Generate job descriptions
         answers = Writer.answer(generate_task, batch_generate = max_job_per_occupation)
@@ -99,6 +136,8 @@ def main():
             updated_dataset.push_to_hub('FinancialSupport/SynthEscoJobAds')
 
         break
+
+
 
 if __name__ == "__main__":
     main()
