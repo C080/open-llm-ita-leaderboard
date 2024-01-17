@@ -16,15 +16,17 @@ def get_model(model_name):
 
         return model, tokenizer
     
-    if model_name == "swap-uniba/LLaMAntino-2-chat-7b-hf-UltraChat-ITA":
+    if model_name == "llamantino":
 
         model = AutoModelForCausalLM.from_pretrained(
             "swap-uniba/LLaMAntino-2-chat-7b-hf-UltraChat-ITA",
             torch_dtype=torch.bfloat16, 
+            load_in_8bit=True
         )
         tokenizer = AutoTokenizer.from_pretrained(
             "swap-uniba/LLaMAntino-2-chat-7b-hf-UltraChat-ITA",
         )
+        return model, tokenizer
         
     
     if model_name == "saiga-7b":
@@ -123,7 +125,7 @@ def get_model(model_name):
     
 
 if __name__ == "__main__":
-    models = ["cerbero-openchat"]
+    models = ["llamantino"]
     for model_name in models:
         print(f"Getting model {model_name}")
         model, tokenizer = get_model(model_name)

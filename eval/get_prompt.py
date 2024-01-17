@@ -1,4 +1,22 @@
 
+def llamantino_prompt(conversation, do_continue=False):
+    prompt = """[INST]<<SYS>>\nSei un assistente disponibile, rispettoso e onesto. Rispondi sempre nel modo piu' utile possibile, pur essendo sicuro. Le risposte non devono includere contenuti dannosi, non etici, razzisti, sessisti, tossici, pericolosi o illegali. Assicurati che le tue risposte siano socialmente imparziali e positive. Se una domanda non ha senso o non e' coerente con i fatti, spiegane il motivo invece di rispondere in modo non corretto. Se non conosci la risposta a una domanda, non condividere informazioni false.\n<</SYS>>\n\n"""
+    #prompt = ""
+    for i, message in enumerate(conversation):
+        if message["role"] == "user":
+            if i != len(conversation) - 1:
+                prompt += f"[INST]{message['text']}[/INST] {conversation[i + 1]['text']} </s> <s> "
+            else:
+                prompt += f"[INST]{message['text']}[/INST] "
+        elif message["role"] == "ai":
+            continue
+        else:
+            raise ValueError("Role not found")
+    assert conversation[-1]["role"] == "user"
+    
+    return prompt
+
+
 def fauno_prompt(conversation, do_continue=False):
     prompt = ""
     for message in conversation:
@@ -86,11 +104,13 @@ def get_prompt(model_name):
         return cerbero_prompt, "[|Umano|]"
     elif model_name == "saiga-7b":
         return cerbero_prompt, "[|Umano|]"
+    elif model_name == 'llamantino':
+        return llamantino_prompt, "[INST]"
     else:
         raise ValueError("Model not found")
 
 if __name__ == "__main__":
-    models = ["cerbero"]
+    models = ["llamantino"]
     for model_name in models:
         print(f"Getting model {model_name}")
         prompt, stop = get_prompt(model_name)
