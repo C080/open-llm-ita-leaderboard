@@ -1,7 +1,16 @@
 import torch
+
+
+# import os
+# os.environ["TRANSFORMERS_CACHE"] = "E:/text-generation-webui-main/models"
+
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import LlamaForCausalLM, LlamaTokenizer
 from peft import PeftModel, PeftConfig
+
+
+
 
 
 def get_model(model_name):
@@ -19,12 +28,14 @@ def get_model(model_name):
     if model_name == "llamantino":
 
         model = AutoModelForCausalLM.from_pretrained(
-            "swap-uniba/LLaMAntino-2-chat-7b-hf-UltraChat-ITA",
+            "swap-uniba/LLaMAntino-2-chat-13b-hf-UltraChat-ITA",
             torch_dtype=torch.bfloat16, 
-            load_in_8bit=True
+            load_in_4bit=True,
+        
         )
         tokenizer = AutoTokenizer.from_pretrained(
-            "swap-uniba/LLaMAntino-2-chat-7b-hf-UltraChat-ITA",
+            "swap-uniba/LLaMAntino-2-chat-13b-hf-UltraChat-ITA",
+
         )
         return model, tokenizer
         

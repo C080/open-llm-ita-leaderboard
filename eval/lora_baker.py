@@ -41,8 +41,10 @@ for name, param in original_weights.items():
         print(f'Found layer:\n{name}\n***\n')
         param.data.add_(alpha * B[name] @ A[name]) # a causa del modo in cui PyTorch gestisce i tensori se cambio l'iteratore cambia anche il dict
 
-model.save_pretrained('saiga-7b-dante-qlora')
-
+model.save_pretrained("saiga-7b-dante-qlora")
+print("pushing to hub")
+model.push_to_hub("saiga-7b-dante-qlora")
+print("done")
 # prompt = "Traduci in volgare fiorentino: \"Mamma mi sono fatto la cacca addosso\""
 
 # model_inputs = tokenizer([prompt], return_tensors="pt").to(device)
