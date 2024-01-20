@@ -53,10 +53,10 @@ def load_model(path):
         'low_cpu_mem_usage': True,
         'torch_dtype': torch.bfloat16,
         'use_flash_attention_2': False,
-        'load_in_8bit': False, # da fixare bitsandbytes
+        'load_in_8bit': False,
     }
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = "cuda"
     model = AutoModelForCausalLM.from_pretrained(path, **model_params).to(device)
     tokenizer = AutoTokenizer.from_pretrained(path)
     print("Model loaded")

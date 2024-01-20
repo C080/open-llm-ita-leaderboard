@@ -1,6 +1,4 @@
 
-
-
 def print_colored(text, color):
     if color == 'red':
         print(f"\033[91m{text}\033[00m")

@@ -1,37 +1,14 @@
-from jobspy import scrape_jobs
+from jobspy import scrape_jobs # keep this bitch first
 import os
 from model import load_model, Agent
 from read_esco import read_dataset
-from utils import print_colored#, job_ad_web_search
+from utils import print_colored
+from search import job_ad_web_search
 from datasets import Dataset, load_dataset, concatenate_datasets
 import pandas as pd
 
 
-def job_ad_web_search(title, websites):
-    i = 0
-    while i < 40:
-        for site in websites:
-            try:
-                jobs = scrape_jobs(
-                    site_name=[site],
-                    search_term=title,
-                    results_wanted=10,
-                    country_indeed='USA'  # only needed for indeed / glassdoor
-                )
-            except Exception as e:
-                print(e)
-                i += 10  # if 403, skip to the next site
-                continue
 
-            if not jobs.empty: # if site returns jobs
-                for job in jobs.itertuples():
-                    if job.description is not None:
-                        return job.description[:100]
-                    i += 1
-                    continue
-            i += 10
-
-    return "No jobs found"
 
 def main():
 
@@ -75,10 +52,10 @@ def main():
         # Construct task string
         generate_task = f"Generate a realistic job description for the role of {row['preferredLabel']},\
                 \nwe are talking about a {row['description']}. It is also known as:\n{row['altLabels']}."
-        
+
         # Add real job ads as reference
         if real_job_ads != "No jobs found":
-            generate_task = f"{generate_task}\n\nHere is a real job ad as reference:\n{real_job_ads}"
+            generate_task = f"{generate_task}\n\nHere is a real job ad as guidance:\n{real_job_ads}"
 
         print_colored(f"[Writer]: receiving task #{i+1}:", "blue")
         #print_colored(generate_task, "blue")
@@ -137,7 +114,5 @@ def main():
 
         break
 
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
