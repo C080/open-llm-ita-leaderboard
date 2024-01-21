@@ -1,8 +1,8 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer 
 import torch
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
+import time
 
 class Agent:
     def __init__(self, model, tokenizer, device):
@@ -11,11 +11,9 @@ class Agent:
         self.device = device
         self.memory = []
 
-    def answer(self, prompt, batch_generate=1):
-        #completion = llm_generate(self.model, self.tokenizer, prompt, self.device)
-        completions = llm_batch_generate(self.model, self.tokenizer, prompt, self.device, batch_generate)
-        #self.memory = completions
-        return completions
+    def answer(self, prompt, max_tokens, batch_generate=1):
+            # Un po fuorviante puo ritornare una lista di risposte ma anche una singola stringa
+            return llm_batch_generate(self.model, self.tokenizer, prompt, self.device, max_tokens, batch_generate)
     
     def memorize(self, message):
         self.memory = message
@@ -49,30 +47,24 @@ class Agent:
 
 
 def load_model(path):
-    model_params = {
-        'low_cpu_mem_usage': True,
-        'torch_dtype': torch.bfloat16,
-        'use_flash_attention_2': False,
-        'load_in_8bit': False,
-    }
 
-    device = "cuda"
-    model = AutoModelForCausalLM.from_pretrained(path, **model_params).to(device)
+    start_time = time.time()
+
+    # I love Tim Dettmers
+    bnb_config = {'load_in_4bit':True,
+                 'bnb_4bit_use_double_quant':True,
+                 'bnb_4bit_quant_type':"nf4",
+                 'bnb_4bit_compute_dtype': torch.bfloat16}
+
+    model = AutoModelForCausalLM.from_pretrained(path, **bnb_config)
     tokenizer = AutoTokenizer.from_pretrained(path)
-    print("Model loaded")
+    end_time = time.time()  # End the timer
+    print(f"Model loading: {end_time - start_time} seconds")  
     return model, tokenizer
 
-def llm_generate(model, tokenizer, prompt, device):
-    chat = [
-    {"role": "user", "content": f"{prompt}"},
-    ]
-    model_inputs = tokenizer.apply_chat_template(chat, tokenize=True, add_generation_prompt=True, return_tensors="pt")
-    model_inputs = model_inputs.to(device)
-    generated_ids = model.generate(model_inputs, max_new_tokens=500, do_sample = True, temperature = 1.5, pad_token_id=tokenizer.eos_token_id)
-    answer = tokenizer.batch_decode(generated_ids)[0].split('[/INST]')[1] # un po una porcata
-    return answer
+def llm_batch_generate(model, tokenizer, prompt, device, max_token, num_sequences):
 
-def llm_batch_generate(model, tokenizer, prompt, device, num_sequences):
+    start_time = time.time()
     chat = [
         {"role": "user", "content": f"{prompt}"},
     ]
@@ -80,7 +72,7 @@ def llm_batch_generate(model, tokenizer, prompt, device, num_sequences):
     model_inputs = model_inputs.to(device)
     generated_ids = model.generate(
         model_inputs,
-        max_new_tokens=500,
+        max_new_tokens= max_token + 100,
         do_sample=True,
         temperature=1.5,
         pad_token_id=tokenizer.eos_token_id,
@@ -96,6 +88,9 @@ def llm_batch_generate(model, tokenizer, prompt, device, num_sequences):
     # If only one sequence was generated, return a string instead of a list
     if len(answers) == 1:
         answers =  answers[0]
+
+    end_time = time.time()  # End the timer
+    print(f"Batch inference: {end_time - start_time} seconds")  
     
     return answers
 
