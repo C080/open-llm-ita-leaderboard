@@ -13,6 +13,61 @@ def llamantino_prompt(conversation, do_continue=False):
         else:
             raise ValueError("Role not found")
     assert conversation[-1]["role"] == "user"
+
+    if do_continue:
+        prompt += "\n" # non mi convince
+    
+    return prompt
+
+
+def mistral_ita_prompt0(conversation, do_continue=False):
+    prompt = ""
+    B_INST, E_INST = "<s>[INST] ", " [/INST]"
+    for i, message in enumerate(conversation):
+        if message["role"] == "user":
+            if i != len(conversation) - 1:
+                prompt += f"{B_INST}{message['text']}{E_INST}\n{conversation[i + 1]['text']}</s>\n"
+            else:
+                prompt += f"{B_INST}{message['text']}{E_INST}</s>"
+        elif message["role"] == "assistant":
+            continue
+        else:
+            raise ValueError("Role not found")
+    assert conversation[-1]["role"] == "user"
+
+    if do_continue:
+        prompt += "<s>" 
+    
+    return prompt
+
+### NEW PROMPT
+def mistral_ita_prompt1(conversation, do_continue=False):
+    B_INST, E_INST = "[INST] ", " [/INST]"
+    prompt = f"<s>{B_INST}"
+    for message in conversation[:-1]:
+        if message['role'] == 'user':
+            prompt += f"{message['text']}{E_INST}\n"
+        elif message['role'] == 'assistant':
+            prompt += f"{message['text']}\n{B_INST}"
+    prompt += '@'
+    prompt = prompt.replace(B_INST+'@', '</s>\n')
+    prompt += f"{B_INST}{conversation[-1]['text']}{E_INST}"
+    if do_continue:
+        prompt += "<s>" 
+    
+    return prompt
+
+    ### NEW PROMPT 000
+def mistral_ita_prompt(conversation, do_continue=False):
+    B_INST, E_INST = "[INST] ", " [/INST]"
+    prompt = "<s>"
+    for message in conversation:
+        if message['role'] == 'user':
+            prompt += f"{B_INST}{message['text']}{E_INST} "
+        elif message['role'] == 'assistant':
+            prompt += f"{message['text']}</s>"
+    # if do_continue:
+    #     prompt += "<s>" 
     
     return prompt
 
@@ -105,12 +160,14 @@ def get_prompt(model_name):
     elif model_name == "saiga-7b":
         return cerbero_prompt, "[|Umano|]"
     elif model_name == 'llamantino':
-        return llamantino_prompt, "[INST]"
+        return llamantino_prompt, "[\INST]"
+    elif model_name == 'mistral-ita-7b':
+        return mistral_ita_prompt, "[\INST]"
     else:
         raise ValueError("Model not found")
 
 if __name__ == "__main__":
-    models = ["llamantino"]
+    models = ["mistral-ita-7b"]
     for model_name in models:
         print(f"Getting model {model_name}")
         prompt, stop = get_prompt(model_name)
@@ -120,13 +177,13 @@ if __name__ == "__main__":
                 text="Fai qualcosa"
             ),
             dict(
-                role="ai",
+                role="assistant",
                 text="Qualcosa fatta"
             ),
             dict(
                 role="user",
                 text="Ora fai qualcos'altro"
             )
-        ], do_continue=True))
-        print("stop:"+stop)
+        ], do_continue=False))
+        #print("stop:"+stop)
         print("===")

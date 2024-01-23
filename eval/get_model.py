@@ -38,6 +38,23 @@ def get_model(model_name):
 
         )
         return model, tokenizer
+    
+    if model_name == "mistral-ita-7b":
+
+        bnb_config = {'load_in_4bit':True,
+                'bnb_4bit_use_double_quant':True,
+                'bnb_4bit_quant_type':"nf4",
+                'bnb_4bit_compute_dtype': torch.bfloat16}
+
+        model_path = "E:/text-generation-webui-main/models/DeepMount00_Mistral-Ita-7b"
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            **bnb_config,
+
+        
+        )
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        return model, tokenizer
         
     
     if model_name == "saiga-7b":
@@ -136,7 +153,7 @@ def get_model(model_name):
     
 
 if __name__ == "__main__":
-    models = ["llamantino"]
+    models = ["mistral-ita-7b"]
     for model_name in models:
         print(f"Getting model {model_name}")
         model, tokenizer = get_model(model_name)
