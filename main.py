@@ -6,6 +6,7 @@ from utils import print_colored
 from search import job_ad_web_search
 from datasets import Dataset, load_dataset, concatenate_datasets
 import pandas as pd
+import random
 
 
 
@@ -24,7 +25,7 @@ def main():
     # load dataset from huggingface
     existing_dataset = load_dataset('FinancialSupport/SynthEscoJobAds')
 
-    occupations = read_and_prepare_datasets(data_path)
+    df_occupations_and_skills = read_and_prepare_datasets(data_path)
     model, tokenizer = load_model(model_path)
 
     # Initialize agent
@@ -32,11 +33,11 @@ def main():
     Supervisor = Agent(model, tokenizer, 'cuda') #quality check of the job description
 
     # Iterate over occupations
-    for i, row in occupations.iterrows():
+    for i, row in df_occupations_and_skills.drop_duplicates(subset = 'preferredLabel_job').iterrows():
 
-        #Check if 'preferredLabel' is already in the dataset
-        if (existing_dataset.filter(lambda example: example['escoLabel'] == row['preferredLabel']).num_rows['train'] > 0) or (overwrite_mode == False): 
-            print_colored(f"[Boss]: {row['preferredLabel']} already in the dataset. Proceed with the next topic", "red")
+        #Check if 'preferredLabel_job' is already in the dataset
+        if (existing_dataset.filter(lambda example: example['escoLabel'] == row['preferredLabel_job']).num_rows['train'] > 0) or (overwrite_mode == False): 
+            print_colored(f"[Boss]: {row['preferredLabel_job']} already in the dataset. Proceed with the next topic", "red")
             continue
 
         # Reset agents memory
@@ -47,17 +48,33 @@ def main():
         print_colored(f"[Boss]: incoming task #{i+1} for the team", "red")
 
         # Look up for job ads
-        print_colored(f"[Searcher]: looking for job ads about {row['preferredLabel']} as reference", "blue")
-        real_job_ad = job_ad_web_search(row['preferredLabel'], websites)
+        print_colored(f"[Searcher]: looking for job ads about {row['preferredLabel_job']} as reference", "blue")
+        real_job_ad = job_ad_web_search(row['preferredLabel_job'], websites)
 
+        # Retrieve all the skills related to the job
+        row_skills = df_occupations_and_skills[df_occupations_and_skills['preferredLabel_job'] == row['preferredLabel_job']]['preferredLabel_skill'].tolist()
+        row_alt_skills = df_occupations_and_skills[df_occupations_and_skills['preferredLabel_job'] == row['preferredLabel_job']]['altLabels_skill'].tolist()
+        row_descriptio_skills = df_occupations_and_skills[df_occupations_and_skills['preferredLabel_job'] == row['preferredLabel_job']]['description_skill'].tolist()
+        # pick 3 random skills
+        random_skills = random.sample(range(1, len(row_skills)), 3)
+        skills_string = "Here is a list of ESCO skills that you can use to write the job description:\n\n"
+        for selected_skill in random_skills:
+            skills_string += f"{row_skills[selected_skill]} (also know as {row_alt_skills[selected_skill]}): {row_descriptio_skills[selected_skill]}\n\n"
+
+
+
+        
         # Construct task string
-        generate_task = f"Generate a realistic job description for the role of {row['preferredLabel']},\
-                \nwe are talking about a {row['description']}. It is also known as:\n{row['altLabels']}."
+        generate_task = f"Generate a realistic job description for the role of {row['preferredLabel_job']},\
+                \nwe are talking about a {row['description_job']}. It is also known as:\n{row['altLabels_job']}."
 
         # Add real job ads as reference
         if real_job_ad != "No jobs found":
             generate_task = f"{generate_task}\n\nHere is a real job ad as guidance:\n{real_job_ad}"
 
+        # Add skills as reference
+        if skills_string != "Here is a list of ESCO skills that you can use to write the job description:\n\n":
+            generate_task += skills_string
 
         print_colored(f"[Writer]: receiving task #{i+1}:", "blue")
         #print_colored(generate_task, "blue")
@@ -103,8 +120,8 @@ def main():
         
         # Save memory of agent 2 in a huggingface dataset
         final_memory = Supervisor.remember()
-        # Add 'preferredLabel' to each job ad
-        final_memory_dicts = [{'job_ad': job_ad, 'escoLabel': row['preferredLabel'], 'seed' : real_job_ad} for job_ad in final_memory]
+        # Add 'preferredLabel_job' to each job ad
+        final_memory_dicts = [{'job_ad': job_ad, 'escoLabel': row['preferredLabel_job'], 'seed' : real_job_ad} for job_ad in final_memory]
         # Convert the list of memories into a Hugging Face Dataset
         new_data = Dataset.from_pandas(pd.DataFrame(final_memory_dicts))
         # Concatenate the existing dataset with the new data

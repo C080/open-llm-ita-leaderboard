@@ -1,23 +1,31 @@
 
 def llamantino_prompt(conversation, do_continue=False):
-    prompt = """[INST]<<SYS>>\nSei un assistente disponibile, rispettoso e onesto. Rispondi sempre nel modo piu' utile possibile, pur essendo sicuro. Le risposte non devono includere contenuti dannosi, non etici, razzisti, sessisti, tossici, pericolosi o illegali. Assicurati che le tue risposte siano socialmente imparziali e positive. Se una domanda non ha senso o non e' coerente con i fatti, spiegane il motivo invece di rispondere in modo non corretto. Se non conosci la risposta a una domanda, non condividere informazioni false.\n<</SYS>>\n\n"""
-    #prompt = ""
-    for i, message in enumerate(conversation):
-        if message["role"] == "user":
-            if i != len(conversation) - 1:
-                prompt += f"[INST]{message['text']}[/INST] {conversation[i + 1]['text']} </s> <s> "
-            else:
-                prompt += f"[INST]{message['text']}[/INST] "
-        elif message["role"] == "ai":
-            continue
+    assert conversation[-1]['role'] == "user"
+    ST, ET = "<s>", "</s>" #Start/End Text
+    SUM, EUM = "[INST]", "[/INST]" #Start/End User Message
+    prompt = ""
+    for message in conversation:
+        if message['role'] == "user":
+            prompt += f"{ST}{SUM}{message['text']}{EUM}"
+        elif message['role'] == "assistant":
+            prompt += f"{message['text']}{ET}"
         else:
-            raise ValueError("Role not found")
-    assert conversation[-1]["role"] == "user"
+            raise ValueError(f"Role not found,\nFounded {message['role']}")
+    
 
     if do_continue:
         prompt += "\n" # non mi convince
     
     return prompt
+
+# llamantino prompt template
+# """
+# <s>[INST] <<SYS>>
+# {your_system_message}
+# <</SYS>>
+
+# {user_message_1} [/INST] {model_reply_1}</s><s>[INST] {user_message_2} [/INST]
+# """
 
 
 def mistral_ita_prompt0(conversation, do_continue=False):
@@ -40,20 +48,16 @@ def mistral_ita_prompt0(conversation, do_continue=False):
     
     return prompt
 
-### NEW PROMPT
-def mistral_ita_prompt1(conversation, do_continue=False):
-    B_INST, E_INST = "[INST] ", " [/INST]"
-    prompt = f"<s>{B_INST}"
-    for message in conversation[:-1]:
+def zefiro_prompt(conversation, do_continue=False):
+
+    prompt = ""
+    for message in conversation:
         if message['role'] == 'user':
-            prompt += f"{message['text']}{E_INST}\n"
+            prompt += f"<|user|>\n{message['text']}</s>\n"
         elif message['role'] == 'assistant':
-            prompt += f"{message['text']}\n{B_INST}"
-    prompt += '@'
-    prompt = prompt.replace(B_INST+'@', '</s>\n')
-    prompt += f"{B_INST}{conversation[-1]['text']}{E_INST}"
-    if do_continue:
-        prompt += "<s>" 
+            prompt += f"<|assistant|>\n{message['text']}</s>\n"
+    # if do_continue:
+    #     prompt += "<s>" 
     
     return prompt
 
@@ -163,26 +167,44 @@ def get_prompt(model_name):
         return llamantino_prompt, "[\INST]"
     elif model_name == 'mistral-ita-7b':
         return mistral_ita_prompt, "[\INST]"
+    elif model_name == 'zefiro':
+        return zefiro_prompt, "[\INST]"
     else:
         raise ValueError("Model not found")
 
 if __name__ == "__main__":
-    models = ["mistral-ita-7b"]
+    models = ["llamantino"]
     for model_name in models:
         print(f"Getting model {model_name}")
         prompt, stop = get_prompt(model_name)
         print(prompt([
             dict(
                 role="user",
-                text="Fai qualcosa"
+                text="SHOT 1"
             ),
             dict(
                 role="assistant",
-                text="Qualcosa fatta"
+                text="ANSWER 1"
+            ),
+             dict(
+                role="user",
+                text="SHOT 2"
+            ),
+            dict(
+                role="assistant",
+                text="ANSWER 2"
+            ),
+             dict(
+                role="user",
+                text="SHOT 3"
+            ),
+            dict(
+                role="assistant",
+                text="ANSWER 3"
             ),
             dict(
                 role="user",
-                text="Ora fai qualcos'altro"
+                text="DOMANDA"
             )
         ], do_continue=False))
         #print("stop:"+stop)

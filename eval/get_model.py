@@ -27,31 +27,32 @@ def get_model(model_name):
     
     if model_name == "llamantino":
 
-        model = AutoModelForCausalLM.from_pretrained(
-            "swap-uniba/LLaMAntino-2-chat-13b-hf-UltraChat-ITA",
-            torch_dtype=torch.bfloat16, 
-            load_in_4bit=True,
-        
-        )
-        tokenizer = AutoTokenizer.from_pretrained(
-            "swap-uniba/LLaMAntino-2-chat-13b-hf-UltraChat-ITA",
+        model_path = "E:/text-generation-webui-main/models/swap-uniba_LLaMAntino-2-chat-13b-hf-UltraChat-ITA"
 
+        bnb_config = {'load_in_4bit':True,
+            'bnb_4bit_use_double_quant':True,
+            'bnb_4bit_quant_type':"nf4",
+            'bnb_4bit_compute_dtype': torch.bfloat16}
+    
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            **bnb_config,
         )
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+
         return model, tokenizer
     
-    if model_name == "mistral-ita-7b":
+    if model_name == "zefiro":
 
         bnb_config = {'load_in_4bit':True,
                 'bnb_4bit_use_double_quant':True,
                 'bnb_4bit_quant_type':"nf4",
                 'bnb_4bit_compute_dtype': torch.bfloat16}
 
-        model_path = "E:/text-generation-webui-main/models/DeepMount00_Mistral-Ita-7b"
+        model_path = "E:/text-generation-webui-main/models/giux78_zefiro-7b-beta-ITA-v0.1"
         model = AutoModelForCausalLM.from_pretrained(
             model_path,
             **bnb_config,
-
-        
         )
         tokenizer = AutoTokenizer.from_pretrained(model_path)
         return model, tokenizer
@@ -153,7 +154,7 @@ def get_model(model_name):
     
 
 if __name__ == "__main__":
-    models = ["mistral-ita-7b"]
+    models = ["llamantino"]
     for model_name in models:
         print(f"Getting model {model_name}")
         model, tokenizer = get_model(model_name)

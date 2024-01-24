@@ -16,16 +16,25 @@ def read_and_prepare_datasets(path):
 
     # Linking skill to occupation with bridge table
     df_occupations['conceptUri'] = df_occupations['conceptUri'].str.split('/').str[-1]
+    df_skills = df_skills[['conceptUri','preferredLabel','altLabels','description']]
     df_skills['conceptUri'] = df_skills['conceptUri'].str.split('/').str[-1]
     df_bridge["occ_id"] = df_bridge["occ_id"].str.split("_").str[1]
     df_bridge["skill_id"] = df_bridge["skill_id"].str.split("_").str[1]
     # use bridge table to link skill to occupation
-    df_occupations = df_occupations.merge(df_bridge, left_on="conceptUri", right_on="occ_id")
-    df_occupations = df_occupations.merge(df_skills, left_on="skill_id", right_on="conceptUri")
+    df_final = df_occupations.merge(df_bridge, left_on="conceptUri", right_on="occ_id")
+    df_final = df_final.merge(df_skills, left_on="skill_id", right_on="conceptUri", suffixes=('_job', '_skill'))
+    df_final = df_final.drop(columns=['conceptUri_job','occ_id', 'skill_id','conceptUri_skill'])
+    # porcata per i duplicati
+    df_final['combined_label'] = df_final['preferredLabel_job'] + df_final['preferredLabel_skill']
+    duplicates = df_final.duplicated(subset='combined_label')
+    # If there are duplicates, drop them
+    if duplicates.any():
+        df_final = df_final.drop_duplicates(subset='combined_label')
+    df_final = df_final.drop(columns='combined_label')
 
 
     
     
 
 
-    return df_occupations
+    return df_final
