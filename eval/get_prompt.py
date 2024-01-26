@@ -18,6 +18,25 @@ def llamantino_prompt(conversation, do_continue=False):
     
     return prompt
 
+def loquace_prompt(conversation, do_continue=False):
+    assert conversation[-1]['role'] == "user"
+    ST, ET = "", "" #Start/End Text
+    SUM, EUM = "", "" #Start/End User Message
+    prompt = ""
+    for message in conversation:
+        if message['role'] == "user":
+            prompt += f"{ST}{SUM}### Instruction: {message['text']}{EUM}"
+        elif message['role'] == "assistant":
+            prompt += f"### Response: {message['text']}{ET}"
+        else:
+            raise ValueError(f"Role not found,\nFounded {message['role']}")
+    
+
+    if do_continue:
+        prompt += "\n" # non mi convince
+    
+    return prompt
+
 # llamantino prompt template
 # """
 # <s>[INST] <<SYS>>
@@ -70,6 +89,20 @@ def mistral_ita_prompt(conversation, do_continue=False):
             prompt += f"{B_INST}{message['text']}{E_INST} "
         elif message['role'] == 'assistant':
             prompt += f"{message['text']}</s>"
+    # if do_continue:
+    #     prompt += "<s>" 
+    
+    return prompt
+
+
+def maestrale_prompt(conversation, do_continue=False):
+    B_INST, E_INST = "<|im_start|>", "<|im_end|>"
+    prompt = ""
+    for message in conversation:
+        if message['role'] == 'user':
+            prompt += f"{B_INST}user\n{message['text']}{E_INST}\n"
+        elif message['role'] == 'assistant':
+            prompt += f"{B_INST}assistant\n{message['text']}{E_INST}\n"
     # if do_continue:
     #     prompt += "<s>" 
     
@@ -169,11 +202,15 @@ def get_prompt(model_name):
         return mistral_ita_prompt, "[\INST]"
     elif model_name == 'zefiro':
         return zefiro_prompt, "[\INST]"
+    elif model_name == 'loquace':
+        return loquace_prompt, "[\INST]"
+    elif model_name == 'maestrale':
+        return maestrale_prompt, "[\INST]"
     else:
         raise ValueError("Model not found")
 
 if __name__ == "__main__":
-    models = ["llamantino"]
+    models = ["maestrale"]
     for model_name in models:
         print(f"Getting model {model_name}")
         prompt, stop = get_prompt(model_name)

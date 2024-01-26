@@ -25,9 +25,43 @@ def get_model(model_name):
 
         return model, tokenizer
     
+    if model_name == "maestrale":
+
+        model_path = "E:/text-generation-webui-main/models/mii-llm_maestrale-chat-v0.2-alpha"
+
+        bnb_config = {'load_in_4bit':True,
+            'bnb_4bit_use_double_quant':True,
+            'bnb_4bit_quant_type':"nf4",
+            'bnb_4bit_compute_dtype': torch.bfloat16}
+    
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            **bnb_config,
+        )
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+        return model, tokenizer
+    
     if model_name == "llamantino":
 
         model_path = "E:/text-generation-webui-main/models/swap-uniba_LLaMAntino-2-chat-13b-hf-UltraChat-ITA"
+
+        bnb_config = {'load_in_4bit':True,
+            'bnb_4bit_use_double_quant':True,
+            'bnb_4bit_quant_type':"nf4",
+            'bnb_4bit_compute_dtype': torch.bfloat16}
+    
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            **bnb_config,
+        )
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+        return model, tokenizer
+    
+    if model_name == "loquace":
+
+        model_path = "E:/text-generation-webui-main/models/cosimoiaia_Loquace-Wizard-13B"
 
         bnb_config = {'load_in_4bit':True,
             'bnb_4bit_use_double_quant':True,
@@ -154,7 +188,7 @@ def get_model(model_name):
     
 
 if __name__ == "__main__":
-    models = ["llamantino"]
+    models = ["maestrale"]
     for model_name in models:
         print(f"Getting model {model_name}")
         model, tokenizer = get_model(model_name)
