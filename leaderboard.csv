@@ -1,0 +1,11 @@
+model types;model;F1;EM;sponsor
+fine-tuned;galatolo/cerbero-7b;72.55;55.6;
+fine-tuned;giux78/zefiro-7b-beta-ITA-v0.1;69.72;52.96;https://www.seeweb.it/
+merge;FinancialSupport/saiga-7b;70.86;51.8;
+peft;raicrits/Hermes7b_ITA;62.09;48.27;https://www.rai.it/
+fine-tuned;mii-llm/maestrale-chat-v0.2-alpha;54.96;39.15;
+fine-tuned;cosimoiaia/Loquace-Wizard-13B;47.37;31.59;
+fine-tuned;swap-uniba/LLaMAntino-2-chat-13b-hf-UltraChat-ITA;50.67;28.98;
+fine-tuned;DeepMount00/Mistral-Ita-7b;41.24;20.52;
+peft;andreabac3/Fauno-Italian-LLM-7B;44.46;0;
+peft;teelinsan/camoscio-7b-llama;37.42;0;
