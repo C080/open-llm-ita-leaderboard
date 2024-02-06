@@ -80,6 +80,19 @@ def zefiro_prompt(conversation, do_continue=False):
     
     return prompt
 
+def rai_prompt(conversation, do_continue=False):
+
+    prompt = ""
+    for message in conversation:
+        if message['role'] == 'user':
+            prompt += f"### Instruction: {message['text']}\n"
+        elif message['role'] == 'assistant':
+            prompt += f"### Response: {message['text']}\n"
+    # if do_continue:
+    #     prompt += "<s>" 
+    
+    return prompt
+
     ### NEW PROMPT 000
 def mistral_ita_prompt(conversation, do_continue=False):
     B_INST, E_INST = "[INST] ", " [/INST]"
@@ -97,14 +110,15 @@ def mistral_ita_prompt(conversation, do_continue=False):
 
 def maestrale_prompt(conversation, do_continue=False):
     B_INST, E_INST = "<|im_start|>", "<|im_end|>"
+    #prompt = "<|im_start|>system\nSei un assistente utile.<|im_end|>\n"
     prompt = ""
     for message in conversation:
         if message['role'] == 'user':
             prompt += f"{B_INST}user\n{message['text']}{E_INST}\n"
         elif message['role'] == 'assistant':
             prompt += f"{B_INST}assistant\n{message['text']}{E_INST}\n"
-    # if do_continue:
-    #     prompt += "<s>" 
+    if do_continue:
+        prompt += f"{E_INST}" 
     
     return prompt
 
@@ -200,12 +214,16 @@ def get_prompt(model_name):
         return llamantino_prompt, "[\INST]"
     elif model_name == 'mistral-ita-7b':
         return mistral_ita_prompt, "[\INST]"
+    elif model_name == 'saiga-v2':
+        return mistral_ita_prompt, "[\INST]"
     elif model_name == 'zefiro':
         return zefiro_prompt, "[\INST]"
     elif model_name == 'loquace':
         return loquace_prompt, "[\INST]"
     elif model_name == 'maestrale':
         return maestrale_prompt, "[\INST]"
+    elif model_name == 'rai':
+        return rai_prompt, "[\INST]"
     else:
         raise ValueError("Model not found")
 

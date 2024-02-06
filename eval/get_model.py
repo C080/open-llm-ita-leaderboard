@@ -27,7 +27,24 @@ def get_model(model_name):
     
     if model_name == "maestrale":
 
-        model_path = "E:/text-generation-webui-main/models/mii-llm_maestrale-chat-v0.2-alpha"
+        model_path = "mii-llm/maestrale-chat-v0.3-alpha"
+
+        bnb_config = {'load_in_4bit':True,
+            'bnb_4bit_use_double_quant':True,
+            'bnb_4bit_quant_type':"nf4",
+            'bnb_4bit_compute_dtype': torch.bfloat16}
+    
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            **bnb_config,
+        )
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+        return model, tokenizer
+    
+    if model_name == "rai":
+
+        model_path = "E:/text-generation-webui-main/models/raicrits_Hermes7b_ITA"
 
         bnb_config = {'load_in_4bit':True,
             'bnb_4bit_use_double_quant':True,
@@ -44,7 +61,7 @@ def get_model(model_name):
     
     if model_name == "llamantino":
 
-        model_path = "E:/text-generation-webui-main/models/swap-uniba_LLaMAntino-2-chat-13b-hf-UltraChat-ITA"
+        model_path = "swap-uniba/LLaMAntino-2-70b-hf-UltraChat-ITA"
 
         bnb_config = {'load_in_4bit':True,
             'bnb_4bit_use_double_quant':True,
@@ -83,21 +100,25 @@ def get_model(model_name):
                 'bnb_4bit_quant_type':"nf4",
                 'bnb_4bit_compute_dtype': torch.bfloat16}
 
-        model_path = "E:/text-generation-webui-main/models/giux78_zefiro-7b-beta-ITA-v0.1"
         model = AutoModelForCausalLM.from_pretrained(
-            model_path,
+            "giux78/zefiro-7b-sft-qlora-ITA-v0.5",
             **bnb_config,
         )
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        tokenizer = AutoTokenizer.from_pretrained("giux78/zefiro-7b-sft-qlora-ITA-v0.5")
         return model, tokenizer
         
     
-    if model_name == "saiga-7b":
+    if model_name == "saiga-v2":
 
-        model_path = "E:/text-generation-webui-main/models/saiga-7b"
+        bnb_config = {'load_in_4bit':True,
+            'bnb_4bit_use_double_quant':True,
+            'bnb_4bit_quant_type':"nf4",
+            'bnb_4bit_compute_dtype': torch.bfloat16}
+
+        model_path = "E:/text-generation-webui-main/models/saiga-v2"
         model = AutoModelForCausalLM.from_pretrained(
             model_path,
-            torch_dtype=torch.bfloat16, 
+            **bnb_config,
         )
         tokenizer = AutoTokenizer.from_pretrained(model_path)
 
@@ -188,7 +209,7 @@ def get_model(model_name):
     
 
 if __name__ == "__main__":
-    models = ["maestrale"]
+    models = ["saiga-v2"]
     for model_name in models:
         print(f"Getting model {model_name}")
         model, tokenizer = get_model(model_name)
