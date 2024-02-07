@@ -110,15 +110,15 @@ def mistral_ita_prompt(conversation, do_continue=False):
 
 def maestrale_prompt(conversation, do_continue=False):
     B_INST, E_INST = "<|im_start|>", "<|im_end|>"
-    #prompt = "<|im_start|>system\nSei un assistente utile.<|im_end|>\n"
-    prompt = ""
+    prompt = "<|im_start|>system\nSei un assistente utile.<|im_end|>\n"
+    #prompt = "Sei un assistente utile.\n"
     for message in conversation:
         if message['role'] == 'user':
             prompt += f"{B_INST}user\n{message['text']}{E_INST}\n"
         elif message['role'] == 'assistant':
             prompt += f"{B_INST}assistant\n{message['text']}{E_INST}\n"
     if do_continue:
-        prompt += f"{E_INST}" 
+        prompt += f"{B_INST}assistant\n" 
     
     return prompt
 
@@ -261,6 +261,6 @@ if __name__ == "__main__":
                 role="user",
                 text="DOMANDA"
             )
-        ], do_continue=False))
+        ], do_continue=True))
         #print("stop:"+stop)
         print("===")
