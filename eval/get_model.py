@@ -1,11 +1,11 @@
 import torch
 
 
-# import os
-# os.environ["TRANSFORMERS_CACHE"] = "E:/text-generation-webui-main/models"
+import os
+os.environ["HF_HOME"] = "E:/text-generation-webui-main/models"
 
 
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, GemmaForCausalLM
 from transformers import LlamaForCausalLM, LlamaTokenizer
 from peft import PeftModel, PeftConfig
 
@@ -25,9 +25,23 @@ def get_model(model_name):
 
         return model, tokenizer
     
-    if model_name == "maestrale":
+    if model_name == "gemma":
 
-        model_path = "mii-llm/maestrale-chat-v0.3-alpha"
+        model_path = "DeepMount00/Gemma_QA_ITA"
+
+    
+        model = GemmaForCausalLM.from_pretrained(
+            model_path,
+            torch_dtype=torch.bfloat16,
+            device_map="auto"
+        ).eval()
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+        return model, tokenizer
+
+    if model_name == "magiq":
+
+        model_path = "mymaia/Magiq-M0"
 
         bnb_config = {'load_in_4bit':True,
             'bnb_4bit_use_double_quant':True,
@@ -61,7 +75,7 @@ def get_model(model_name):
     
     if model_name == "llamantino":
 
-        model_path = "swap-uniba/LLaMAntino-2-70b-hf-UltraChat-ITA"
+        model_path = "swap-uniba/LLaMAntino-2-chat-7b-hf-UltraChat-ITA"
 
         bnb_config = {'load_in_4bit':True,
             'bnb_4bit_use_double_quant':True,
@@ -209,7 +223,7 @@ def get_model(model_name):
     
 
 if __name__ == "__main__":
-    models = ["saiga-v2"]
+    models = ["gemma"]
     for model_name in models:
         print(f"Getting model {model_name}")
         model, tokenizer = get_model(model_name)

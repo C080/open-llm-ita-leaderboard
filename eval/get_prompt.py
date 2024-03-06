@@ -46,6 +46,27 @@ def loquace_prompt(conversation, do_continue=False):
 # {user_message_1} [/INST] {model_reply_1}</s><s>[INST] {user_message_2} [/INST]
 # """
 
+def gemma(conversation, do_continue=False):
+    prompt = "<bos><start_of_turn>user\nDi seguito ti verrà fornito un contesto e poi una domanda. il tuo compito è quello di rispondere alla domanda basandoti esclusivamente sul contesto.\n"
+    B_INST, E_INST = "<start_of_turn>", "<end_of_turn>"
+    for i, message in enumerate(conversation):
+        if message["role"] == "user":
+            if i != len(conversation) - 1:
+                prompt += f"{message['text']}\n{conversation[i + 1]['text']}{E_INST}\n{B_INST}"
+            else:
+                prompt += f"{message['text']}{E_INST}"
+        elif message["role"] == "assistant":
+            #prompt += f"{B_INST}"
+            continue
+        else:
+            raise ValueError("Role not found")
+    assert conversation[-1]["role"] == "user"
+
+    if do_continue:
+        prompt += f"\n{B_INST}"
+    
+    return prompt
+
 
 def mistral_ita_prompt0(conversation, do_continue=False):
     prompt = ""
@@ -104,6 +125,19 @@ def mistral_ita_prompt(conversation, do_continue=False):
             prompt += f"{message['text']}</s>"
     # if do_continue:
     #     prompt += "<s>" 
+    
+    return prompt
+
+def magiq_prompt(conversation, do_continue=False):
+    B_INST, E_INST = "[INST] ", " [/INST]"
+    prompt = "<s>"
+    for message in conversation:
+        if message['role'] == 'user':
+            prompt += f"{B_INST}{message['text']}{E_INST} "
+        elif message['role'] == 'assistant':
+            prompt += f"{message['text']}</s>"
+    if do_continue:
+        prompt += "<s>" 
     
     return prompt
 
@@ -222,13 +256,17 @@ def get_prompt(model_name):
         return loquace_prompt, "[\INST]"
     elif model_name == 'maestrale':
         return maestrale_prompt, "[\INST]"
+    elif model_name == 'magiq':
+        return magiq_prompt, "[\INST]"
     elif model_name == 'rai':
         return rai_prompt, "[\INST]"
+    elif model_name == 'gemma':
+        return gemma, "<start_of_turn>"
     else:
         raise ValueError("Model not found")
 
 if __name__ == "__main__":
-    models = ["maestrale"]
+    models = ["gemma"]
     for model_name in models:
         print(f"Getting model {model_name}")
         prompt, stop = get_prompt(model_name)

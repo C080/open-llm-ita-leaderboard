@@ -1,0 +1,46 @@
+{
+    "predicted_answers": [
+        {
+            "id": "d762",
+            "prediction_text": ""
+        },
+        {
+            "id": "d1122",
+            "prediction_text": ""
+        }
+    ],
+    "theoretical_answers": [
+        {
+            "id": "d762",
+            "answers": {
+                "text": [
+                    "1949",
+                    "1949",
+                    "1949"
+                ],
+                "answer_start": [
+                    1110,
+                    1110,
+                    1110
+                ]
+            }
+        },
+        {
+            "id": "d1122",
+            "answers": {
+                "text": [
+                    "altre parti",
+                    "altre parti di un oggetto",
+                    "altre parti di un oggetto",
+                    "altre parti di un oggetto"
+                ],
+                "answer_start": [
+                    353,
+                    353,
+                    353,
+                    353
+                ]
+            }
+        }
+    ]
+}
