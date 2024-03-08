@@ -56,7 +56,7 @@ def evaluate_on_test_set(test_dataset, train_dataset, model, SAMPLES_TO_EVALUATE
         if output_max_length > max_length:
             output_max_length = max_length
         
-        output = model.generate(**inputs, max_length=output_max_length)
+        output = model.generate(**inputs, max_length=output_max_length, eos_token_id = 107)
         generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
 
         #answer_start_idx = generated_text.rfind("risposta:") + len("risposta:")
