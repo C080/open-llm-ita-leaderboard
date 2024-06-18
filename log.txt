@@ -1,0 +1,513 @@
++ export HF_HOME=/leonardo_work/IscrC_LLM-EVAL/scolomb1
++ HF_HOME=/leonardo_work/IscrC_LLM-EVAL/scolomb1
++ export NCCL_DEBUG=INFO
++ NCCL_DEBUG=INFO
++ cd /leonardo_work/IscrC_LLM-EVAL
++ source /leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ '[' -n /bin/bash -o -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ VIRTUAL_ENV=/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv
+++ export VIRTUAL_ENV
+++ _OLD_VIRTUAL_PATH=/leonardo/home/userexternal/scolomb1/.local/bin:/leonardo/home/userexternal/scolomb1/bin:/cineca/bin:/leonardo/prod/opt/tools/cintools/1.0/none/bin:/leonardo/prod/spack/03/install/0.19/linux-rhel8-icelake/gcc-8.5.0/environment-modules-5.2.0-rz47odw4phlhzhhbz7b65nv5s5othgmi/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ PATH=/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/bin:/leonardo/home/userexternal/scolomb1/.local/bin:/leonardo/home/userexternal/scolomb1/bin:/cineca/bin:/leonardo/prod/opt/tools/cintools/1.0/none/bin:/leonardo/prod/spack/03/install/0.19/linux-rhel8-icelake/gcc-8.5.0/environment-modules-5.2.0-rz47odw4phlhzhhbz7b65nv5s5othgmi/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export PATH
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(eval_venv) '
+++ export PS1
+++ VIRTUAL_ENV_PROMPT='(eval_venv) '
+++ export VIRTUAL_ENV_PROMPT
+++ '[' -n /bin/bash -o -n '' ']'
+++ hash -r
++ GPUS_PER_NODE=4
++ NNODES=2
+++ expr 2 '*' 4
++ NUM_PROCESSES=8
+++ head -n 1
+++ scontrol show hostnames 'lrdn[2954,3030]'
++ MASTER_ADDR=lrdn2954
++ MASTER_PORT=6000
++ export 'LAUNCHER=accelerate launch         --num_processes 8         --num_machines 2         --machine_rank $SLURM_PROCID         --main_process_ip lrdn2954         --main_process_port 6000'
++ LAUNCHER='accelerate launch         --num_processes 8         --num_machines 2         --machine_rank $SLURM_PROCID         --main_process_ip lrdn2954         --main_process_port 6000'
++ export SCRIPT=/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py
++ SCRIPT=/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py
++ export 'SCRIPT_ARGS=         --model hf         --model_args pretrained=/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79,dtype=float         --tasks arc_it         --num_fewshot 0         --batch_size 1         --limit 10         '
++ SCRIPT_ARGS='         --model hf         --model_args pretrained=/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79,dtype=float         --tasks arc_it         --num_fewshot 0         --batch_size 1         --limit 10         '
++ export 'CMD=accelerate launch         --num_processes 8         --num_machines 2         --machine_rank $SLURM_PROCID         --main_process_ip lrdn2954         --main_process_port 6000 /leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py          --model hf         --model_args pretrained=/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79,dtype=float         --tasks arc_it         --num_fewshot 0         --batch_size 1         --limit 10         '
++ CMD='accelerate launch         --num_processes 8         --num_machines 2         --machine_rank $SLURM_PROCID         --main_process_ip lrdn2954         --main_process_port 6000 /leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py          --model hf         --model_args pretrained=/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79,dtype=float         --tasks arc_it         --num_fewshot 0         --batch_size 1         --limit 10         '
++ srun --jobid 5274906 bash -c 'accelerate launch         --num_processes 8         --num_machines 2         --machine_rank $SLURM_PROCID         --main_process_ip lrdn2954         --main_process_port 6000 /leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py          --model hf         --model_args pretrained=/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79,dtype=float         --tasks arc_it         --num_fewshot 0         --batch_size 1         --limit 10         '
+The following values were not passed to `accelerate launch` and had defaults used instead:
+                More than one GPU was found, enabling multi-GPU training.
+                If this was unintended please pass in `--num_processes=1`.
+        `--mixed_precision` was set to a value of `'no'`
+        `--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+The following values were not passed to `accelerate launch` and had defaults used instead:
+                More than one GPU was found, enabling multi-GPU training.
+                If this was unintended please pass in `--num_processes=1`.
+        `--mixed_precision` was set to a value of `'no'`
+        `--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2024-06-15:14:46:33,417 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+2024-06-15:14:46:44,964 INFO     [__main__.py:272] Verbosity set to INFO
+2024-06-15:14:47:08,166 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+2024-06-15:14:47:09,666 INFO     [__main__.py:272] Verbosity set to INFO
+2024-06-15:14:47:14,849 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:47:14,850 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:47:14,963 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:47:14,963 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+2024-06-15:14:47:15,030 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:47:15,030 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:47:15,033 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:47:15,033 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+2024-06-15:14:47:15,533 WARNING  [other.py:349] Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   3%|▎         | 1/37 [00:17<10:32, 17.57s/it]2024-06-15:14:47:49,703 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+2024-06-15:14:47:51,172 INFO     [__main__.py:272] Verbosity set to INFO
+2024-06-15:14:47:56,518 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:47:56,518 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:47:56,521 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:47:56,521 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2024-06-15:14:48:07,105 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+2024-06-15:14:48:13,629 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+2024-06-15:14:48:17,306 INFO     [__main__.py:272] Verbosity set to INFO
+2024-06-15:14:48:17,306 INFO     [__main__.py:272] Verbosity set to INFO
+Loading checkpoint shards:  14%|█▎   2024-06-15:14:48:45,011 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:48:45,011 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:48:45,011 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:48:45,011 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:48:45,140 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:48:45,140 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+2024-06-15:14:48:45,140 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:48:45,140 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+2024-06-15:14:48:45,694 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+2024-06-15:14:48:47,324 INFO     [__main__.py:272] Verbosity set to INFO
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2024-06-15:14:48:52,660 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:48:52,661 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:48:52,664 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:48:52,664 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+Loading checkpoint shards:   0%|          | 0/37 [00:00<?, ?it/s]Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   0%|          | 0/37 [00:00<?, ?it/s]2024-06-15:14:48:59,006 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+2024-06-15:14:49:00,528 INFO     [__main__.py:272] Verbosity set to INFO
+Loading checkpoint shards:  16%|█▌        | 6/37 [00:54<06:09, 11.93s/it]2024-06-15:14:49:04,455 WARNING  [loading.py:546] Using the latest cached version of the module from /leonardo_work/IscrC_LLM-EVAL/scolomb1/modules/evaluate_modules/metrics/evaluate-metric--exact_match/9d3b67e0c429cd7460b2b05aab53419b48eea369b73e1d9f185a56ca90c373d4 (last modified on Mon Apr 29 15:22:16 2024) since it couldn't be found locally at evaluate-metric--exact_match, or remotely on the Hugging Face Hub.
+Loading checkpoint shards:   3%|▎         | 1/37 [00:11<07:09, 11.94s/it]2024-06-15:14:49:05,890 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:49:05,890 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:49:05,893 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:49:05,893 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+2024-06-15:14:49:05,945 INFO     [__main__.py:272] Verbosity set to INFO
+Loading checkpoint shards:   3%|▎         | 1/37 [00:11<07:05, 11.81s/it]Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+2024-06-15:14:49:11,331 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2024-06-15:14:49:11,332 INFO     [__main__.py:363] Selected Tasks: ['arc_it']
+2024-06-15:14:49:11,335 INFO     [evaluator.py:152] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234
+2024-06-15:14:49:11,335 INFO     [evaluator.py:189] Initializing hf model, with arguments: {'pretrained': '/leonardo_work/IscrC_LLM-EVAL/scolomb1/hub/models--Qwen--Qwen2-72B-Instruct/snapshots/1af63c698f59c4235668ec9c1395468cb7cd7e79', 'dtype': 'float'}
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:  22%|██▏       | 8/37 [01:46<06:25, 13.28s/it]
+
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank3]:     cli_evaluate()
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank3]:     results = evaluator.simple_evaluate(
+[rank3]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank3]:     return fn(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank3]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank3]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank3]:     return cls(**args, **args2)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank3]:     self._create_model(
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank3]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank3]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank3]:     return model_class.from_pretrained(
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank3]:     ) = cls._load_pretrained_model(
+[rank3]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank3]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank3]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank3]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank3]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank3]:     new_value = value.to(device)
+[rank3]:                 ^^^^^^^^^^^^^^^^
+[rank3]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU  has a total capacity of 63.42 GiB of which 355.31 MiB is free. Including non-PyTorch memory, this process has 63.07 GiB memory in use. Of the allocated memory 62.03 GiB is allocated by PyTorch, and 248.00 KiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank0]:     cli_evaluate()
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank0]:     results = evaluator.simple_evaluate(
+[rank0]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank0]:     return fn(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank0]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank0]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank0]:     return cls(**args, **args2)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank0]:     self._create_model(
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank0]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank0]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank0]:     return model_class.from_pretrained(
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank0]:     ) = cls._load_pretrained_model(
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank0]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank0]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank0]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank0]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank0]:     new_value = value.to(device)
+[rank0]:                 ^^^^^^^^^^^^^^^^
+[rank0]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank2]:     cli_evaluate()
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank2]:     results = evaluator.simple_evaluate(
+[rank2]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank2]:     return fn(*args, **kwargs)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank2]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank2]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank2]:     return cls(**args, **args2)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank2]:     self._create_model(
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank2]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank2]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank2]:     return model_class.from_pretrained(
+[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank2]:     ) = cls._load_pretrained_model(
+[rank2]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank2]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank2]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank2]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank2]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank2]:     new_value = value.to(device)
+[rank2]:                 ^^^^^^^^^^^^^^^^
+[rank2]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU  has a total capacity of 63.42 GiB of which 355.31 MiB is free. Including non-PyTorch memory, this process has 63.07 GiB memory in use. Of the allocated memory 62.03 GiB is allocated by PyTorch, and 248.00 KiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Loading checkpoint shards:  22%|██▏       | 8/37 [00:42<02:35,  5.36s/it]
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank1]:     cli_evaluate()
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank1]:     results = evaluator.simple_evaluate(
+[rank1]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank1]:     return fn(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank1]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank1]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank1]:     return cls(**args, **args2)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank1]:     self._create_model(
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank1]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank1]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank1]:     return model_class.from_pretrained(
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank1]:     ) = cls._load_pretrained_model(
+[rank1]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank1]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank1]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank1]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank1]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank1]:     new_value = value.to(device)
+[rank1]:                 ^^^^^^^^^^^^^^^^
+[rank1]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU  has a total capacity of 63.42 GiB of which 355.31 MiB is free. Including non-PyTorch memory, this process has 63.07 GiB memory in use. Of the allocated memory 62.03 GiB is allocated by PyTorch, and 248.00 KiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+E0615 14:49:59.119000 23098480292928 torch/distributed/elastic/multiprocessing/api.py:826] failed (exitcode: 1) local_rank: 0 (pid: 2588147) of binary: /leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/bin/python
+Traceback (most recent call last):
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/commands/accelerate_cli.py", line 46, in main
+    args.func(args)
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/commands/launch.py", line 1073, in launch_command
+    multi_gpu_launcher(args)
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/commands/launch.py", line 718, in multi_gpu_launcher
+    distrib_run.run(args)
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/torch/distributed/run.py", line 870, in run
+    elastic_launch(
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 132, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 263, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError:
+============================================================
+/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2024-06-15_14:49:59
+  host      : lrdn2954.leonardo.local
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 2588148)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2024-06-15_14:49:59
+  host      : lrdn2954.leonardo.local
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 2588149)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2024-06-15_14:49:59
+  host      : lrdn2954.leonardo.local
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 2588150)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-06-15_14:49:59
+  host      : lrdn2954-net9-3.leonardo.local
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2588147)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: lrdn2954: task 0: Exited with exit code 1
+Loading checkpoint shards:  22%|██▏       | 8/37 [02:42<09:48, 20.29s/it]
+Loading checkpoint shards:  22%|██▏       | 8/37 [02:30<09:05, 18.81s/it]
+Loading checkpoint shards:  22%|██▏       | 8/37 [02:44<09:57, 20.59s/it]
+Loading checkpoint shards:  22%|██▏       | 8/37 [02:45<09:58, 20.64s/it]
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank4]:     cli_evaluate()
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank4]:     results = evaluator.simple_evaluate(
+[rank4]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank4]:     return fn(*args, **kwargs)
+[rank4]:            ^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank4]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank4]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank4]:     return cls(**args, **args2)
+[rank4]:            ^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank4]:     self._create_model(
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank4]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank4]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank4]:     return model_class.from_pretrained(
+[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank4]:     ) = cls._load_pretrained_model(
+[rank4]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank4]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank4]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank4]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank4]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank4]:     new_value = value.to(device)
+[rank4]:                 ^^^^^^^^^^^^^^^^
+[rank4]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank7]:     cli_evaluate()
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank7]:     results = evaluator.simple_evaluate(
+[rank7]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank7]:     return fn(*args, **kwargs)
+[rank7]:            ^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank7]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank7]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank7]:     return cls(**args, **args2)
+[rank7]:            ^^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank7]:     self._create_model(
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank7]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank7]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank7]:     return model_class.from_pretrained(
+[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank7]:     ) = cls._load_pretrained_model(
+[rank7]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank7]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank7]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank7]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank7]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank7]:     new_value = value.to(device)
+[rank7]:                 ^^^^^^^^^^^^^^^^
+[rank7]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU  has a total capacity of 63.42 GiB of which 355.31 MiB is free. Including non-PyTorch memory, this process has 63.07 GiB memory in use. Of the allocated memory 62.03 GiB is allocated by PyTorch, and 248.00 KiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank5]:     cli_evaluate()
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank5]:     results = evaluator.simple_evaluate(
+[rank5]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank5]:     return fn(*args, **kwargs)
+[rank5]:            ^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank5]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank5]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank5]:     return cls(**args, **args2)
+[rank5]:            ^^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank5]:     self._create_model(
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank5]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank5]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank5]:     return model_class.from_pretrained(
+[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank5]:     ) = cls._load_pretrained_model(
+[rank5]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank5]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank5]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank5]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank5]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank5]:     new_value = value.to(device)
+[rank5]:                 ^^^^^^^^^^^^^^^^
+[rank5]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU  has a total capacity of 63.42 GiB of which 355.31 MiB is free. Including non-PyTorch memory, this process has 63.07 GiB memory in use. Of the allocated memory 62.03 GiB is allocated by PyTorch, and 248.00 KiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 448, in <module>
+[rank6]:     cli_evaluate()
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py", line 369, in cli_evaluate
+[rank6]:     results = evaluator.simple_evaluate(
+[rank6]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/utils.py", line 342, in _wrapper
+[rank6]:     return fn(*args, **kwargs)
+[rank6]:            ^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/evaluator.py", line 192, in simple_evaluate
+[rank6]:     lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+[rank6]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/api/model.py", line 148, in create_from_arg_string
+[rank6]:     return cls(**args, **args2)
+[rank6]:            ^^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 217, in __init__
+[rank6]:     self._create_model(
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/models/huggingface.py", line 562, in _create_model
+[rank6]:     self._model = self.AUTO_MODEL_CLASS.from_pretrained(
+[rank6]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+[rank6]:     return model_class.from_pretrained(
+[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3754, in from_pretrained
+[rank6]:     ) = cls._load_pretrained_model(
+[rank6]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4214, in _load_pretrained_model
+[rank6]:     new_error_msgs, offload_index, state_dict_index = _load_state_dict_into_meta_model(
+[rank6]:                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/transformers/modeling_utils.py", line 887, in _load_state_dict_into_meta_model
+[rank6]:     set_module_tensor_to_device(model, param_name, param_device, **set_module_kwargs)
+[rank6]:   File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/utils/modeling.py", line 400, in set_module_tensor_to_device
+[rank6]:     new_value = value.to(device)
+[rank6]:                 ^^^^^^^^^^^^^^^^
+[rank6]: torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 924.00 MiB. GPU  has a total capacity of 63.42 GiB of which 355.31 MiB is free. Including non-PyTorch memory, this process has 63.07 GiB memory in use. Of the allocated memory 62.03 GiB is allocated by PyTorch, and 248.00 KiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+E0615 14:51:49.119000 22749830562880 torch/distributed/elastic/multiprocessing/api.py:826] failed (exitcode: 1) local_rank: 0 (pid: 1343229) of binary: /leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/bin/python
+Traceback (most recent call last):
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/commands/accelerate_cli.py", line 46, in main
+    args.func(args)
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/commands/launch.py", line 1073, in launch_command
+    multi_gpu_launcher(args)
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/accelerate/commands/launch.py", line 718, in multi_gpu_launcher
+    distrib_run.run(args)
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/torch/distributed/run.py", line 870, in run
+    elastic_launch(
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 132, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/leonardo_work/IscrC_LLM-EVAL/scolomb1/eval_venv/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 263, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError:
+============================================================
+/leonardo_work/IscrC_LLM-EVAL/scolomb1/lm-evaluation-harness/lm_eval/__main__.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2024-06-15_14:51:49
+  host      : lrdn3030.leonardo.local
+  rank      : 5 (local_rank: 1)
+  exitcode  : 1 (pid: 1343230)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2024-06-15_14:51:49
+  host      : lrdn3030-net9-3.leonardo.local
+  rank      : 6 (local_rank: 2)
+  exitcode  : 1 (pid: 1343231)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2024-06-15_14:51:49
+  host      : lrdn3030.leonardo.local
+  rank      : 7 (local_rank: 3)
+  exitcode  : 1 (pid: 1343232)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-06-15_14:51:49
+  host      : lrdn3030-net9-3.leonardo.local
+  rank      : 4 (local_rank: 0)
+  exitcode  : 1 (pid: 1343229)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: lrdn3030: task 1: Exited with exit code 1
